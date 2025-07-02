@@ -6,147 +6,91 @@
     <title>Shahidul Islam // Bio</title>
     
     <link rel="stylesheet" href="style.css">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
+<body data-theme="dark">
 
-    <!-- Custom Cursor -->
+    <div id="preloader"><div class="spinner"></div></div>
     <div class="cursor"></div>
+    <canvas id="particle-canvas"></canvas>
 
-    <div class="page-frame">
-        <div class="page-content">
-            
-            <header class="profile-block">
-                <div class="avatar-container">
-                    <img src="https://i.ibb.co/tPMk2g25/pp5-2.png" alt="Profile Picture" class="profile-avatar">
-                </div>
-                <div class="identity">
-                    <h1 class="main-name">Shahidul Islam</h1>
-                    <p class="tagline">Content Creator │ Developer │ Thinker</p>
-                </div>
-            </header>
+    <audio id="background-audio" loop>
+        <source src="https://pixabay.com/sound-effects/download/sound-effect-ambient-flute-loop-a-109433.mp3" type="audio/mpeg">
+    </audio>
 
-            <nav class="links-grid">
-                <a href="https://facebook.com/sibp365" target="_blank" class="link-item" style="--i: 1;">
-                    <span class="link-text">01 // Facebook</span>
-                </a>
-                <a href="https://youtube.com/@sibp365" target="_blank" class="link-item" style="--i: 2;">
-                    <span class="link-text">02 // YouTube</span>
-                </a>
-                <a href="https://github.com/sibp247" target="_blank" class="link-item" style="--i: 3;">
-                    <span class="link-text">03 // GitHub</span>
-                </a>
-                <a href="https://twitter.com/sibp247" target="_blank" class="link-item" style="--i: 4;">
-                    <span class="link-text">04 // Twitter-X</span>
-                </a>
-                <a href="https://linkedin.com/in/sibp365" target="_blank" class="link-item" style="--i: 5;">
-                    <span class="link-text">05 // LinkedIn</span>
-                </a>
-                <a href="https://instagram.com/sibp247" target="_blank" class="link-item" style="--i: 6;">
-                    <span class="link-text">06 // Instagram</span>
-                </a>
-                                <a href="https://pinterst.com/sibp247" target="_blank" class="link-item" style="--i: 5;">
-                    <span class="link-text">07 // Pinterest</span>
-                </a>
-                <a href="https://si99.pro" target="_blank" class="link-item" style="--i: 6;">
-                    <span class="link-text">08 // Website</span>
-                </a>
-            </nav>
-
-            <main class="projects-section">
-                <h2 class="section-title">Key Projects</h2>
-                <div class="project-grid">
-                    <!-- Project 1 -->
-                    <a href="https://youtu.be/nM0UWOEFQ4U" target="_blank" class="project-card" style="--i: 7;">
-                        <span class="project-id">Project/Vid-001</span>
-                        <h3 class="project-title">How to Install AutoCAD 2025</h3>
-                        <p class="project-description">Learn how to install AutoCAD 2025!  This guide demonstrates the installation using AutoCAD Mechanical 2025.</p>
-                        <span class="project-cta">View Tutorial →</span>
-                    </a>
-                    <!-- Project 2 -->
-                    <a href="https://github.com/sibp247" target="_blank" class="project-card" style="--i: 8;">
-                        <span class="project-id">Project/Src-002</span>
-                        <h3 class="project-title">Nebula Framework</h3>
-                        <p class="project-description">Open-source codebase for procedural generation of cosmic environments. Built for performance.</p>
-                        <span class="project-cta">Examine Schematics →</span>
-                    </a>
-                </div>
-            </main>
-
-            <!-- ================================== -->
-            <!--        NEW DEMO BLOCKS START       -->
-            <!-- ================================== -->
-
-            <!-- Block 1: Tool Specification -->
-            <section class="tool-spec-section" style="--i: 9;">
-                <h2 class="section-title">Tool Specification</h2>
-                <div class="spec-list">
-                    <div class="spec-item">
-                        <span class="spec-category">Languages:</span>
-                        <p class="spec-tools">JavaScript (ES6+), HTML5, CSS3, Python, SQL</p>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-category">Frameworks:</span>
-                        <p class="spec-tools">React, Node.js, Next.js, Django, Svelte</p>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-category">Design:</span>
-                        <p class="spec-tools">Figma, Adobe XD, Photoshop, Prototyping</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Block 2: Design Philosophy -->
-            <section class="philosophy-section" style="--i: 10;">
-                <blockquote class="philosophy-quote">
-                    <p>"Good design is like a refrigerator—when it works, no one notices, but when it doesn’t, it sure stinks."</p>
-                    <cite>— Irene Au</cite>
-                </blockquote>
-            </section>
-
-            <!-- Block 3: Academic Blueprint -->
-            <section class="timeline-section" style="--i: 11;">
-                <h2 class="section-title">Career Blueprint</h2>
-                <div class="timeline">
-                    <!-- Timeline Item 1 -->
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <span class="timeline-date">2018 - 2022</span>
-                            <h4 class="timeline-title">Hajee Mohammad Danesh Science and Technology University</h4>
-                            <p class="timeline-company">B.Sc in Mechanical Engineering</p>
-                        </div>
-                    </div>
-                    <!-- Timeline Item 2 -->
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <span class="timeline-date">2015 - 2017</span>
-                            <h4 class="timeline-title">Jamuna Sar Karkhana Uchcha Madhyamic Bidhyalaya</h4>
-                            <p class="timeline-company">Higher Secondary Certificate</p>
-                        </div>
-                    </div>
-                    <!-- Timeline Item 3 -->
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <span class="timeline-date">2010 - 2015</span>
-                            <h4 class="timeline-title">Boyra Israil Ahmed High School</h4>
-                            <p class="timeline-company">Secondary School Certificate</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================================== -->
-            <!--         NEW DEMO BLOCKS END        -->
-            <!-- ================================== -->
-            
-            <footer class="footer">
-                <p>Est. 2025</p>
-            </footer>
+    <!-- NEW Interactive Settings Panel -->
+    <div class="settings-container">
+        <button id="settings-toggle" class="settings-gear" aria-label="Toggle Settings">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div id="settings-menu" class="settings-menu">
+            <div class="setting-item">
+                <span class="setting-label">Theme</span>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+                    <span class="icon-container">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </span>
+                </button>
+            </div>
+             <div class="setting-item">
+                <span class="setting-label">Sound</span>
+                <button id="mute-toggle" class="control-btn" aria-label="Mute Audio">
+                    <i class="fas fa-volume-xmark"></i>
+                </button>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Particles</span>
+                <label class="switch">
+                    <input type="checkbox" id="particles-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Cursor</span>
+                <label class="switch">
+                    <input type="checkbox" id="cursor-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
+    </div>
+
+    <div class="page-content">
+        
+        <!-- The rest of your page content remains the same -->
+        <header class="profile-block card">
+            <img src="https://i.ibb.co/tPMk2g25/pp5-2.png" alt="Profile Picture" class="profile-avatar">
+            <div class="identity">
+                <h1 class="main-name">Shahidul Islam</h1>
+                <p class="tagline">Content Creator │ Developer │ Thinker</p>
+            </div>
+        </header>
+        <nav class="social-links card">
+            <a href="https://facebook.com/sibp365" target="_blank" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://youtube.com/@sibp365" target="_blank" class="social-link"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://github.com/sibp247" target="_blank" class="social-link"><i class="fa-brands fa-github"></i></a>
+            <a href="https://twitter.com/sibp247" target="_blank" class="social-link"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://linkedin.com/in/sibp365" target="_blank" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://instagram.com/sibp247" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://pinterst.com/sibp247" target="_blank" class="social-link"><i class="fa-brands fa-pinterest"></i></a>
+            <a href="https://si99.pro" target="_blank" class="social-link"><i class="fa-solid fa-globe"></i></a>
+        </nav>
+        <main class="projects-section card">
+            <h2 class="section-title">Key Projects</h2>
+            <div class="project-grid">
+                <a href="https://youtu.be/nM0UWOEFQ4U" target="_blank" a class="project-card"><span class="project-id">Project/Vid-001</span><h3 class="project-title">How to Install AutoCAD 2025</h3><p class="project-description">A guide demonstrating the installation of AutoCAD Mechanical 2025.</p><span class="project-cta">View Tutorial <i class="fa-solid fa-arrow-right"></i></span></a>
+                <a href="https://github.com/sibp247" target="_blank" a class="project-card"><span class="project-id">Project/Src-002</span><h3 class="project-title">Nebula Framework</h3><p class="project-description">Open-source codebase for procedural generation of cosmic environments.</p><span class="project-cta">Examine Schematics <i class="fa-solid fa-arrow-right"></i></span></a>
+            </div>
+        </main>
+        <section class="tool-spec-section card"><h2 class="section-title">Tool Specification</h2><div class="spec-list"><div class="spec-item"><span class="spec-category">Languages</span><p class="spec-tools">JavaScript (ES6+), HTML5, CSS3, Python, SQL</p></div><div class="spec-item"><span class="spec-category">Frameworks</span><p class="spec-tools">React, Node.js, Next.js, Django, Svelte</p></div><div class="spec-item"><span class="spec-category">Design</span><p class="spec-tools">Figma, Adobe XD, Photoshop, Prototyping</p></div></div></section>
+        <section class="philosophy-section card"><blockquote class="philosophy-quote"><p>"Good design is like a refrigerator—when it works, no one notices, but when it doesn’t, it sure stinks."</p><cite>— Irene Au</cite></blockquote></section>
+        <section class="timeline-section card"><h2 class="section-title">Career Blueprint</h2><div class="timeline"><div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2018 - 2022</span><h4 class="timeline-title">Hajee Mohammad Danesh Science and Technology University</h4><p class="timeline-company">B.Sc in Mechanical Engineering</p></div></div><div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2015 - 2017</span><h4 class="timeline-title">Jamuna Sar Karkhana Uchcha Madhyamic Bidhyalaya</h4><p class="timeline-company">Higher Secondary Certificate</p></div></div><div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2010 - 2015</span><h4 class="timeline-title">Boyra Israil Ahmed High School</h4><p class="timeline-company">Secondary School Certificate</p></div></div></div></section>
+        <footer class="footer card"><p>© 2024 Shahidul Islam. All Rights Reserved.</p></footer>
+        
     </div>
     
     <script src="script.js"></script>

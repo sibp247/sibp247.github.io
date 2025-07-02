@@ -71,16 +71,39 @@ document.addEventListener('DOMContentLoaded', () => {
         setSetting('audioMuted', !isAudioPlaying);
     });
     
-    // --- CUSTOM CURSOR ---
+    // --- FIXED & ENHANCED: CUSTOM CURSOR ---
     const applyCursor = (enabled) => {
         body.classList.toggle('custom-cursor-disabled', !enabled);
         cursorToggle.checked = enabled;
         setSetting('customCursor', enabled);
     };
     cursorToggle.addEventListener('change', () => applyCursor(cursorToggle.checked));
+    
+    // List of elements that should trigger the cursor's 'hover' state
+    const interactiveElements = 'a, button, .project-card, .slider, .settings-gear, .control-btn, .theme-toggle-btn';
+
+    // Event listener for mouse movement
     document.addEventListener('mousemove', e => {
-        cursor.setAttribute("style", `top: ${e.pageY}px; left: ${e.pageX}px;`);
+        if (cursor) {
+            // Use clientX/Y for position:fixed elements. This is the main fix for the gap.
+            cursor.style.top = e.clientY + 'px';
+            cursor.style.left = e.clientX + 'px';
+        }
     });
+
+    // Event listeners to add/remove the 'hover' class from the cursor
+    document.addEventListener('mouseover', e => {
+        // Use .closest() to check if the target or its parent is interactive
+        if (e.target.closest(interactiveElements)) {
+            cursor.classList.add('hover');
+        }
+    });
+    document.addEventListener('mouseout', e => {
+        if (e.target.closest(interactiveElements)) {
+            cursor.classList.remove('hover');
+        }
+    });
+
 
     // --- PARTICLE EFFECT ---
     const ctx = particleCanvas.getContext('2d');
@@ -133,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             animateParticles();
         } else {
             particleCanvas.style.opacity = '0';
-            cancelAnimationFrame(animationFrameId);
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
             animationFrameId = null;
         }
     };
@@ -161,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     initializeSettings();
 
-    // --- SCROLL-REVEAL ANIMATIONS (from previous version) ---
+    // --- SCROLL-REVEAL ANIMATIONS ---
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {

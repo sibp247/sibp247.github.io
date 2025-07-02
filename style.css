@@ -14,7 +14,6 @@ body[data-theme="dark"] {
     --accent-glow: rgba(0, 247, 255, 0.3);
     --border-color: rgba(255, 255, 255, 0.1);
     --heading-color: #ffffff;
-    --aurora-opacity: 0.3;
     --theme-toggle-bg: #4c4c81;
     --theme-toggle-ear: #6565a8;
 }
@@ -28,7 +27,6 @@ body[data-theme="light"] {
     --accent-glow: rgba(0, 123, 255, 0.3);
     --border-color: rgba(0, 0, 0, 0.1);
     --heading-color: #111111;
-    --aurora-opacity: 0.5;
     --theme-toggle-bg: #87ceeb;
     --theme-toggle-ear: #a1d9f0;
 }
@@ -42,7 +40,7 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
-    cursor: none;
+    cursor: none; /* Hide default cursor when custom one is active */
     position: relative;
     transition: background-color 0.4s, color 0.4s;
 }
@@ -53,85 +51,85 @@ body {
 .spinner { width: 50px; height: 50px; border: 4px solid rgba(255, 255, 255, 0.2); border-top-color: #00f7ff; border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Aurora Background */
-body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 15% 25%, #2a00ff, transparent 40%), radial-gradient(circle at 85% 75%, #ff00c8, transparent 40%), radial-gradient(circle at 50% 50%, var(--accent-color), transparent 30%); animation: aurora 20s infinite linear; z-index: -2; opacity: var(--aurora-opacity); transition: opacity 0.4s; }
-@keyframes aurora { 0% { transform: rotate(0deg) scale(1.5); } 50% { transform: rotate(180deg) scale(1.2); } 100% { transform: rotate(360deg) scale(1.5); } }
+/* --- NEW: Animated Gradient Background --- */
+/* This replaces the old aurora effect for a more subtle and beautiful feel */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: 400% 400%;
+    animation: gradientBG 25s ease infinite;
+    z-index: -2;
+    opacity: 1;
+    transition: opacity 0.4s;
+}
+body[data-theme="dark"]::before {
+    background-image: linear-gradient(-45deg, #0f0f1a, #2a00ff33, #0f0f1a, #ff00c822, #0f0f1a);
+}
+body[data-theme="light"]::before {
+    background-image: linear-gradient(-45deg, #f0f2f5, #007bff30, #f0f2f5, #87ceeb55, #f0f2f5);
+}
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-/* --- CUSTOM CURSOR & PARTICLE CANVAS --- */
-.cursor { width: 20px; height: 20px; border: 2px solid var(--accent-color); border-radius: 50%; position: fixed; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999; transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.4s; }
-body:hover .cursor { background-color: var(--accent-glow); }
+
+/* --- FIXED: CUSTOM CURSOR & PARTICLE CANVAS --- */
+.cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.4s ease;
+    /* top and left are set by JS, no transition needed here to avoid lag */
+}
+/* NEW: Hover state for the cursor */
+.cursor.hover {
+    width: 50px;
+    height: 50px;
+    background-color: var(--accent-glow);
+    border-color: transparent;
+}
 body.custom-cursor-disabled { cursor: auto; }
 body.custom-cursor-disabled .cursor { display: none; }
+
+/* NEW: Force hide default cursor on interactive elements when our custom cursor is enabled */
+body:not(.custom-cursor-disabled) a,
+body:not(.custom-cursor-disabled) button,
+body:not(.custom-cursor-disabled) .project-card,
+body:not(.custom-cursor-disabled) [role="button"],
+body:not(.custom-cursor-disabled) .slider,
+body:not(.custom-cursor-disabled) .settings-gear {
+    cursor: none;
+}
+
 #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; transition: opacity 0.5s; }
 
+
 /* --- SETTINGS PANEL --- */
-.settings-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-.settings-gear { width: 50px; height: 50px; background: var(--card-bg-color); border: 1px solid var(--border-color); backdrop-filter: blur(10px); color: var(--primary-text-color); border-radius: 50%; cursor: pointer; font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease; }
+.settings-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
+.settings-gear { width: 50px; height: 50px; background: var(--card-bg-color); border: 1px solid var(--border-color); backdrop-filter: blur(10px); color: var(--primary-text-color); border-radius: 50%; font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease; }
 .settings-gear:hover { transform: scale(1.1) rotate(22.5deg); }
-.settings-menu {
-    position: absolute;
-    bottom: 65px;
-    right: 0;
-    width: 220px;
-    background: var(--card-bg-color);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(15px);
-    border-radius: 12px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    opacity: 0;
-    transform: translateY(10px) scale(0.95);
-    visibility: hidden;
-    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
-}
+.settings-menu { position: absolute; bottom: 65px; right: 0; width: 220px; background: var(--card-bg-color); border: 1px solid var(--border-color); backdrop-filter: blur(15px); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 15px; opacity: 0; transform: translateY(10px) scale(0.95); visibility: hidden; transition: opacity 0.3s, transform 0.3s, visibility 0.3s; }
 .settings-menu.active { opacity: 1; transform: translateY(0) scale(1); visibility: visible; }
 .setting-item { display: flex; justify-content: space-between; align-items: center; }
 .setting-label { font-size: 1rem; color: var(--primary-text-color); }
 
 /* --- CUSTOM THEME TOGGLE (BEAR STYLE) --- */
-.theme-toggle-btn {
-    position: relative;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: none;
-    background-color: var(--theme-toggle-bg);
-    cursor: pointer;
-    overflow: hidden;
-    transition: background-color 0.4s;
-}
-.theme-toggle-btn::before { /* The "ear" */
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: var(--theme-toggle-ear);
-    transition: transform 0.4s ease-in-out, background-color 0.4s;
-    transform: translateX(-100%);
-}
+.theme-toggle-btn { position: relative; width: 45px; height: 45px; border-radius: 50%; border: none; background-color: var(--theme-toggle-bg); overflow: hidden; transition: background-color 0.4s; }
+.theme-toggle-btn::before { content: ''; position: absolute; top: -5px; left: -5px; width: 25px; height: 25px; border-radius: 50%; background-color: var(--theme-toggle-ear); transition: transform 0.4s ease-in-out, background-color 0.4s; transform: translateX(-100%); }
 body[data-theme="dark"] .theme-toggle-btn::before { transform: translateX(0); }
-.theme-toggle-btn .icon-container {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.4s ease-in-out;
-}
+.theme-toggle-btn .icon-container { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; transition: transform 0.4s ease-in-out; }
 .theme-toggle-btn i { font-size: 1.1rem; position: absolute; transition: opacity 0.2s, transform 0.4s; }
 .fa-sun { color: var(--theme-toggle-sun-color); }
 .fa-moon { color: var(--theme-toggle-moon-color); }
-
 body[data-theme="light"] .theme-toggle-btn .fa-sun { opacity: 1; transform: translateY(0) rotate(0deg); }
 body[data-theme="light"] .theme-toggle-btn .fa-moon { opacity: 0; transform: translateY(100%) rotate(180deg); }
 body[data-theme="dark"] .theme-toggle-btn .fa-sun { opacity: 0; transform: translateY(-100%) rotate(-180deg); }
@@ -140,35 +138,14 @@ body[data-theme="dark"] .theme-toggle-btn .fa-moon { opacity: 1; transform: tran
 /* --- GENERIC TOGGLE SWITCH (for Particles/Cursor) --- */
 .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
 .switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ccc;
-    border-radius: 28px;
-    transition: 0.4s;
-}
-.slider:before {
-    position: absolute; content: ""; height: 20px; width: 20px;
-    left: 4px; bottom: 4px;
-    background-color: white;
-    border-radius: 50%;
-    transition: 0.4s;
-}
+.slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 28px; transition: 0.4s; }
+.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: 0.4s; }
 input:checked + .slider { background-color: var(--accent-color); }
 input:checked + .slider:before { transform: translateX(22px); }
 
 /* --- SOUND MUTE BUTTON --- */
-.control-btn {
-    width: 45px; height: 45px;
-    background: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    color: var(--primary-text-color);
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.3s;
-}
+.control-btn { width: 45px; height: 45px; background: transparent; border: 1px solid var(--border-color); border-radius: 50%; color: var(--primary-text-color); font-size: 1.1rem; transition: all 0.3s; }
 .control-btn:hover { background-color: var(--accent-glow); }
-
 
 /* --- MAIN PAGE CONTENT STYLES --- */
 .page-content { max-width: 800px; margin: 0 auto; padding: 40px 20px; display: flex; flex-direction: column; gap: 30px; }
@@ -197,49 +174,13 @@ body[data-theme="light"] .project-card { background: rgba(0, 0, 0, 0.05); }
 .philosophy-quote { border-left: 3px solid var(--accent-color); padding-left: 20px; font-style: italic; transition: border-color 0.4s; }
 
 /* --- TIMELINE SECTION (REFINED) --- */
-.timeline {
-    position: relative;
-    padding-left: 40px; /* Space between line and text */
-    border-left: 2px dotted var(--border-color);
-    transition: border-color 0.4s;
-}
-.timeline-item {
-    position: relative;
-    margin-bottom: 30px; /* Increased margin for better spacing */
-}
-.timeline-item:last-child {
-    margin-bottom: 0;
-}
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    /* This robustly centers the circle on the dotted line */
-    left: -41px; 
-    transform: translateX(-50%);
-    /* This vertically aligns the circle with the date text */
-    top: 6px; 
-    width: 12px;
-    height: 12px;
-    background-color: var(--bg-color);
-    border: 2px solid var(--accent-color);
-    border-radius: 50%;
-    z-index: 1;
-    transition: background-color 0.4s, border-color 0.4s;
-}
-.timeline-date {
-    font-family: 'Roboto Mono', monospace;
-    color: var(--secondary-text-color);
-    font-size: 0.9rem;
-    line-height: 1.5; /* This creates space for the text below */
-}
-.timeline-title {
-    font-size: 1.1rem;
-    color: var(--heading-color);
-    margin: 2px 0 5px; /* Tightened margins for a cleaner look */
-}
-.timeline-company {
-    font-size: 1rem;
-}
+.timeline { position: relative; padding-left: 40px; border-left: 2px dotted var(--border-color); transition: border-color 0.4s; }
+.timeline-item { position: relative; margin-bottom: 30px; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-item::before { content: ''; position: absolute; left: -41px; transform: translateX(-50%); top: 6px; width: 12px; height: 12px; background-color: var(--bg-color); border: 2px solid var(--accent-color); border-radius: 50%; z-index: 1; transition: background-color 0.4s, border-color 0.4s; }
+.timeline-date { font-family: 'Roboto Mono', monospace; color: var(--secondary-text-color); font-size: 0.9rem; line-height: 1.5; }
+.timeline-title { font-size: 1.1rem; color: var(--heading-color); margin: 2px 0 5px; }
+.timeline-company { font-size: 1rem; }
 
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 768px) {

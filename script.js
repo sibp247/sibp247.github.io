@@ -1,197 +1,253 @@
+// script.js
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- UTILITY FUNCTIONS ---
-    const getSetting = (key, defaultValue) => localStorage.getItem(key) ?? defaultValue;
-    const setSetting = (key, value) => localStorage.setItem(key, value);
-
-    // --- DOM ELEMENT SELECTION ---
-    const body = document.body;
+    // --- PRELOADER ---
     const preloader = document.getElementById('preloader');
-    const settingsToggle = document.getElementById('settings-toggle');
-    const settingsMenu = document.getElementById('settings-menu');
-    const themeToggleButton = document.getElementById('theme-toggle');
-    const muteToggleButton = document.getElementById('mute-toggle');
+    window.addEventListener('load', () => {
+        preloader.classList.add('loaded');
+        // Ensure it's fully gone after transition
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500);
+    });
+
+    // --- SETTINGS & LOCALSTORAGE ---
+    const settings = {
+        theme: localStorage.getItem('theme') || 'dark',
+        sound: localStorage.getItem('sound') === 'true', // false by default
+        particles: localStorage.getItem('particles') === 'true', // false by default
+        cursor: localStorage.getItem('cursor') === 'true' // false by default
+    };
+
+    // --- DOM ELEMENT SELECTORS ---
+    const body = document.body;
+    const themeToggle = document.getElementById('theme-toggle');
+    const muteToggle = document.getElementById('mute-toggle');
     const particlesToggle = document.getElementById('particles-toggle');
     const cursorToggle = document.getElementById('cursor-toggle');
+    const settingsToggle = document.getElementById('settings-toggle');
+    const settingsContainer = document.querySelector('.settings-container');
     const backgroundAudio = document.getElementById('background-audio');
-    const cursor = document.querySelector('.cursor');
-    const particleCanvas = document.getElementById('particle-canvas');
-    
-    // --- PRELOADER ---
-    window.addEventListener('load', () => preloader.classList.add('loaded'));
 
-    // --- SETTINGS PANEL ---
-    settingsToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        settingsMenu.classList.toggle('active');
-    });
-    document.addEventListener('click', (e) => {
-        if (!settingsMenu.contains(e.target) && !settingsToggle.contains(e.target)) {
-            settingsMenu.classList.remove('active');
-        }
-    });
-
-    // --- THEME SWITCHER ---
-    const applyTheme = (theme) => {
-        body.dataset.theme = theme;
-        setSetting('theme', theme);
-    };
-    themeToggleButton.addEventListener('click', () => {
-        const newTheme = body.dataset.theme === 'dark' ? 'light' : 'dark';
-        applyTheme(newTheme);
-    });
-
-    // --- BACKGROUND AUDIO ---
-    const unmuteIcon = '<i class="fas fa-volume-high"></i>';
-    const muteIcon = '<i class="fas fa-volume-xmark"></i>';
-    let isAudioPlaying = false;
-    
-    const startAudio = () => {
-        const audioMuted = getSetting('audioMuted', 'true') === 'true';
-        if (!audioMuted) {
-            backgroundAudio.volume = 0.2;
-            backgroundAudio.play().then(() => {
-                isAudioPlaying = true;
-                muteToggleButton.innerHTML = unmuteIcon;
-            }).catch(e => console.error("Audio autoplay failed.", e));
-        }
-        document.removeEventListener('click', startAudio);
-    };
-    document.addEventListener('click', startAudio);
-
-    muteToggleButton.addEventListener('click', () => {
-        isAudioPlaying = !isAudioPlaying;
-        if (isAudioPlaying) {
-            backgroundAudio.play();
-            muteToggleButton.innerHTML = unmuteIcon;
-        } else {
-            backgroundAudio.pause();
-            muteToggleButton.innerHTML = muteIcon;
-        }
-        setSetting('audioMuted', !isAudioPlaying);
-    });
-    
-    // --- FIXED & ENHANCED: CUSTOM CURSOR ---
-    const applyCursor = (enabled) => {
-        body.classList.toggle('custom-cursor-disabled', !enabled);
-        cursorToggle.checked = enabled;
-        setSetting('customCursor', enabled);
-    };
-    cursorToggle.addEventListener('change', () => applyCursor(cursorToggle.checked));
-    
-    // List of elements that should trigger the cursor's 'hover' state
-    const interactiveElements = 'a, button, .project-card, .slider, .settings-gear, .control-btn, .theme-toggle-btn';
-
-    // Event listener for mouse movement
-    document.addEventListener('mousemove', e => {
-        if (cursor) {
-            // Use clientX/Y for position:fixed elements. This is the main fix for the gap.
-            cursor.style.top = e.clientY + 'px';
-            cursor.style.left = e.clientX + 'px';
-        }
-    });
-
-    // Event listeners to add/remove the 'hover' class from the cursor
-    document.addEventListener('mouseover', e => {
-        // Use .closest() to check if the target or its parent is interactive
-        if (e.target.closest(interactiveElements)) {
-            cursor.classList.add('hover');
-        }
-    });
-    document.addEventListener('mouseout', e => {
-        if (e.target.closest(interactiveElements)) {
-            cursor.classList.remove('hover');
-        }
-    });
-
-
-    // --- PARTICLE EFFECT ---
-    const ctx = particleCanvas.getContext('2d');
-    let particles = [];
-    let animationFrameId;
-
-    const resizeCanvas = () => {
-        particleCanvas.width = window.innerWidth;
-        particleCanvas.height = window.innerHeight;
-    };
-
-    const createParticles = () => {
-        particles = [];
-        const particleCount = window.innerWidth < 768 ? 40 : 80;
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * particleCanvas.width,
-                y: Math.random() * particleCanvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                radius: Math.random() * 1.5 + 0.5
-            });
-        }
-    };
-    
-    const animateParticles = () => {
-        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-        ctx.fillStyle = getComputedStyle(body).getPropertyValue('--primary-text-color') + '33'; // Faintly colored particles
-
-        particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < 0 || p.x > particleCanvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > particleCanvas.height) p.vy *= -1;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fill();
-        });
-        animationFrameId = requestAnimationFrame(animateParticles);
-    };
-
-    const applyParticles = (enabled) => {
-        particlesToggle.checked = enabled;
-        setSetting('particlesEnabled', enabled);
-        if (enabled) {
-            particleCanvas.style.opacity = '1';
-            resizeCanvas();
-            createParticles();
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            animateParticles();
-        } else {
-            particleCanvas.style.opacity = '0';
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            animationFrameId = null;
-        }
-    };
-    particlesToggle.addEventListener('change', () => applyParticles(particlesToggle.checked));
-    window.addEventListener('resize', () => { if(particlesToggle.checked) { resizeCanvas(); createParticles(); }});
-
-    // --- INITIALIZE SETTINGS ON PAGE LOAD ---
-    const initializeSettings = () => {
+    // --- INITIALIZATION ---
+    function applyInitialSettings() {
         // Theme
-        const savedTheme = getSetting('theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        applyTheme(savedTheme);
+        body.setAttribute('data-theme', settings.theme);
 
-        // Audio
-        const audioMuted = getSetting('audioMuted', 'true') === 'true';
-        muteToggleButton.innerHTML = audioMuted ? muteIcon : unmuteIcon;
-        isAudioPlaying = !audioMuted;
-
-        // Cursor
-        const cursorEnabled = getSetting('customCursor', 'true') === 'true';
-        applyCursor(cursorEnabled);
+        // Sound
+        backgroundAudio.muted = !settings.sound;
+        updateMuteIcon();
+        // Try to play audio after first user interaction
+        document.addEventListener('click', playAudioOnce, { once: true });
 
         // Particles
-        const particlesEnabled = getSetting('particlesEnabled', 'true') === 'true';
-        applyParticles(particlesEnabled);
-    };
-    initializeSettings();
+        particlesToggle.checked = settings.particles;
+        if (settings.particles) {
+            initParticles();
+        }
 
-    // --- SCROLL-REVEAL ANIMATIONS ---
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                revealObserver.unobserve(entry.target);
-            }
+        // Cursor
+        cursorToggle.checked = settings.cursor;
+        if (settings.cursor) {
+            initCustomCursor();
+        }
+    }
+    
+    // --- SETTINGS PANEL ---
+    settingsToggle.addEventListener('click', () => {
+        settingsContainer.classList.toggle('open');
+    });
+
+    // Close settings menu if clicking outside of it
+    document.addEventListener('click', (e) => {
+        if (!settingsContainer.contains(e.target)) {
+            settingsContainer.classList.remove('open');
+        }
+    });
+
+
+    // --- THEME TOGGLE ---
+    themeToggle.addEventListener('click', () => {
+        const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        body.setAttribute('data-theme', newTheme);
+        settings.theme = newTheme;
+        localStorage.setItem('theme', newTheme);
+        // Particle colors might need to be updated
+        if (particlesActive) {
+            stopParticles();
+            initParticles();
+        }
+    });
+
+    // --- AUDIO CONTROLS ---
+    function playAudioOnce() {
+        if (!settings.sound) return;
+        backgroundAudio.play().catch(error => console.log("Audio autoplay was prevented. User needs to interact more."));
+    }
+
+    function updateMuteIcon() {
+        const icon = muteToggle.querySelector('i');
+        if (backgroundAudio.muted) {
+            icon.classList.remove('fa-volume-high');
+            icon.classList.add('fa-volume-xmark');
+        } else {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+    }
+
+    muteToggle.addEventListener('click', () => {
+        backgroundAudio.muted = !backgroundAudio.muted;
+        settings.sound = !backgroundAudio.muted;
+        localStorage.setItem('sound', settings.sound);
+        updateMuteIcon();
+        if (!backgroundAudio.muted && backgroundAudio.paused) {
+            backgroundAudio.play();
+        }
+    });
+
+
+    // --- CUSTOM CURSOR ---
+    let cursorHandler = null;
+    function initCustomCursor() {
+        const cursor = document.querySelector('.cursor');
+        const interactiveElements = document.querySelectorAll('a, button, .project-card, .switch, .settings-toggle');
+
+        cursor.style.display = 'block';
+        body.classList.add('hide-cursor');
+
+        cursorHandler = (e) => {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        };
+        window.addEventListener('mousemove', cursorHandler);
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
         });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.card').forEach(card => revealObserver.observe(card));
+    }
+
+    function destroyCustomCursor() {
+        const cursor = document.querySelector('.cursor');
+        cursor.style.display = 'none';
+        body.classList.remove('hide-cursor');
+        if (cursorHandler) {
+            window.removeEventListener('mousemove', cursorHandler);
+            cursorHandler = null;
+        }
+    }
+
+    cursorToggle.addEventListener('change', () => {
+        settings.cursor = cursorToggle.checked;
+        localStorage.setItem('cursor', settings.cursor);
+        if (settings.cursor) {
+            initCustomCursor();
+        } else {
+            destroyCustomCursor();
+        }
+    });
+
+
+    // --- PARTICLE BACKGROUND ---
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationFrameId;
+    let particlesActive = false;
+    let mouse = { x: null, y: null };
+
+    function getParticleColor() {
+        const currentTheme = body.getAttribute('data-theme');
+        return currentTheme === 'dark' ? 'rgba(88, 166, 255, 0.5)' : 'rgba(0, 123, 255, 0.5)';
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * 1 - 0.5;
+            this.color = getParticleColor();
+        }
+        update() {
+            if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+            if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            // Mouse interaction
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if(distance < 100){
+                this.x -= dx/20;
+                this.y -= dy/20;
+            }
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        canvas.style.opacity = '1';
+        particlesActive = true;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        const numberOfParticles = (canvas.width * canvas.height) / 9000;
+        for (let i = 0; i < numberOfParticles; i++) {
+            particles.push(new Particle());
+        }
+        animateParticles();
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', updateMousePosition);
+    }
+    
+    function updateMousePosition(e) {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    }
+
+    function resizeCanvas() {
+        stopParticles();
+        initParticles();
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+        }
+        animationFrameId = requestAnimationFrame(animateParticles);
+    }
+
+    function stopParticles() {
+        particlesActive = false;
+        cancelAnimationFrame(animationFrameId);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.style.opacity = '0';
+        window.removeEventListener('resize', resizeCanvas);
+        window.removeEventListener('mousemove', updateMousePosition);
+    }
+
+    particlesToggle.addEventListener('change', () => {
+        settings.particles = particlesToggle.checked;
+        localStorage.setItem('particles', settings.particles);
+        if (settings.particles) {
+            initParticles();
+        } else {
+            stopParticles();
+        }
+    });
+
+    // --- KICK EVERYTHING OFF ---
+    applyInitialSettings();
 });

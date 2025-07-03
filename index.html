@@ -13,83 +13,117 @@
 </head>
 <body data-theme="dark">
 
+    <!-- Preloader -->
     <div id="preloader"><div class="spinner"></div></div>
+
+    <!-- Animated Aurora Background - Key for Glass Effect -->
+    <div class="aurora-background">
+        <div class="aurora-shape shape1"></div>
+        <div class="aurora-shape shape2"></div>
+        <div class="aurora-shape shape3"></div>
+    </div>
+    
+    <!-- Custom Cursor & Particle Canvas -->
     <div class="cursor"></div>
     <canvas id="particle-canvas"></canvas>
 
+    <!-- Background Audio -->
     <audio id="background-audio" loop>
         <source src="https://pixabay.com/sound-effects/download/sound-effect-ambient-flute-loop-a-109433.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- NEW Interactive Settings Panel -->
+    <!-- Interactive Settings Panel -->
     <div class="settings-container">
         <button id="settings-toggle" class="settings-gear" aria-label="Toggle Settings">
             <i class="fas fa-cog"></i>
         </button>
         <div id="settings-menu" class="settings-menu">
-            <div class="setting-item">
-                <span class="setting-label">Theme</span>
-                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
-                    <span class="icon-container">
-                        <i class="fas fa-sun"></i>
-                        <i class="fas fa-moon"></i>
-                    </span>
-                </button>
-            </div>
-             <div class="setting-item">
-                <span class="setting-label">Sound</span>
-                <button id="mute-toggle" class="control-btn" aria-label="Mute Audio">
-                    <i class="fas fa-volume-xmark"></i>
-                </button>
-            </div>
-            <div class="setting-item">
-                <span class="setting-label">Particles</span>
-                <label class="switch">
-                    <input type="checkbox" id="particles-toggle">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="setting-item">
-                <span class="setting-label">Cursor</span>
-                <label class="switch">
-                    <input type="checkbox" id="cursor-toggle">
-                    <span class="slider"></span>
-                </label>
-            </div>
+            <!-- Settings items remain the same -->
+            <div class="setting-item"><span class="setting-label">Theme</span><button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme"><span class="icon-container"><i class="fas fa-sun"></i><i class="fas fa-moon"></i></span></button></div>
+            <div class="setting-item"><span class="setting-label">Sound</span><button id="mute-toggle" class="control-btn" aria-label="Mute Audio"><i class="fas fa-volume-xmark"></i></button></div>
+            <div class="setting-item"><span class="setting-label">Particles</span><label class="switch"><input type="checkbox" id="particles-toggle"><span class="slider"></span></label></div>
+            <div class="setting-item"><span class="setting-label">Cursor</span><label class="switch"><input type="checkbox" id="cursor-toggle"><span class="slider"></span></label></div>
         </div>
     </div>
 
+    <!-- Main Page Content -->
     <div class="page-content">
         
-        <!-- The rest of your page content remains the same -->
         <header class="profile-block card">
-            <img src="https://i.ibb.co/tPMk2g25/pp5-2.png" alt="Profile Picture" class="profile-avatar">
+            <img src="https://i.ibb.co/tPMk2g25/pp5-2.png" alt="Profile Picture of Shahidul Islam" class="profile-avatar">
             <div class="identity">
                 <h1 class="main-name">Shahidul Islam</h1>
                 <p class="tagline">Content Creator │ Developer │ Thinker</p>
+                <p class="bio-intro">I merge engineering precision with creative development to build elegant, user-centric digital experiences.</p>
             </div>
         </header>
+
         <nav class="social-links card">
-            <a href="https://www.facebook.com/sibp365" target="_blank" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@sibp365" target="_blank" class="social-link"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://github.com/sibp247" target="_blank" class="social-link"><i class="fa-brands fa-github"></i></a>
-            <a href="https://x.com/sibp247" target="_blank" class="social-link"><i class="fa-brands fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/in/sibp365/" target="_blank" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/sibp247" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.pinterest.com/sibp247/" target="_blank" class="social-link"><i class="fa-brands fa-pinterest"></i></a>
-            <a href="https://si99.pro/" target="_blank" class="social-link"><i class="fa-solid fa-globe"></i></a>
+            <a href="https://www.facebook.com/sibp365" target="_blank" class="social-link" aria-label="Facebook Profile"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@sibp365" target="_blank" class="social-link" aria-label="YouTube Channel"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://github.com/sibp247" target="_blank" class="social-link" aria-label="GitHub Profile"><i class="fa-brands fa-github"></i></a>
+            <a href="https://x.com/sibp247" target="_blank" class="social-link" aria-label="Twitter Profile"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/sibp365/" target="_blank" class="social-link" aria-label="LinkedIn Profile"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.instagram.com/sibp247" target="_blank" class="social-link" aria-label="Instagram Profile"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.pinterest.com/sibp247/" target="_blank" class="social-link" aria-label="Pinterest Profile"><i class="fa-brands fa-pinterest"></i></a>
+            <a href="https://si99.pro/" target="_blank" class="social-link" aria-label="Personal Website"><i class="fa-solid fa-globe"></i></a>
         </nav>
+
         <main class="projects-section card">
-            <h2 class="section-title">Key Projects</h2>
+            <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Key Projects</h2>
             <div class="project-grid">
                 <a href="https://www.youtube.com/watch?v=nM0UWOEFQ4U" target="_blank" a class="project-card"><span class="project-id">Project/Vid-001</span><h3 class="project-title">How to Install AutoCAD 2025</h3><p class="project-description">A guide demonstrating the installation of AutoCAD Mechanical 2025.</p><span class="project-cta">View Tutorial <i class="fa-solid fa-arrow-right"></i></span></a>
                 <a href="https://github.com/sibp247" target="_blank" a class="project-card"><span class="project-id">Project/Src-002</span><h3 class="project-title">Nebula Framework</h3><p class="project-description">Open-source codebase for procedural generation of cosmic environments.</p><span class="project-cta">Examine Schematics <i class="fa-solid fa-arrow-right"></i></span></a>
             </div>
         </main>
-        <section class="tool-spec-section card"><h2 class="section-title">Tool Specification</h2><div class="spec-list"><div class="spec-item"><span class="spec-category">Languages</span><p class="spec-tools">JavaScript (ES6+), HTML5, CSS3, Python, SQL</p></div><div class="spec-item"><span class="spec-category">Frameworks</span><p class="spec-tools">React, Node.js, Next.js, Django, Svelte</p></div><div class="spec-item"><span class="spec-category">Design</span><p class="spec-tools">Figma, Adobe XD, Photoshop, Prototyping</p></div></div></section>
-        <section class="philosophy-section card"><blockquote class="philosophy-quote"><p>"Good design is like a refrigerator—when it works, no one notices, but when it doesn’t, it sure stinks."</p><cite>— Irene Au</cite></blockquote></section>
-        <section class="timeline-section card"><h2 class="section-title">Academic Blueprint</h2><div class="timeline"><div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2018 - 2022</span><h4 class="timeline-title">Hajee Mohammad Danesh Science and Technology University</h4><p class="timeline-company">B.Sc in Mechanical Engineering</p></div></div><div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2015 - 2017</span><h4 class="timeline-title">Jamuna Sar Karkhana Uchcha Madhyamic Bidhyalaya</h4><p class="timeline-company">Higher Secondary Certificate</p></div></div><div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2010 - 2015</span><h4 class="timeline-title">Boyra Israil Ahmed High School</h4><p class="timeline-company">Secondary School Certificate</p></div></div></div></section>
-        <footer class="footer card"><p>© 2025 Shahidul Islam. All Rights Reserved.</p></footer>
+        
+        <section class="tool-spec-section card">
+            <h2 class="section-title"><i class="fa-solid fa-microchip"></i> Tool Specification</h2>
+            <div class="spec-grid">
+                <div class="spec-group">
+                    <h3 class="spec-category">Languages</h3>
+                    <div class="tool-tags">
+                        <span class="tool-tag">JavaScript (ES6+)</span><span class="tool-tag">HTML5</span><span class="tool-tag">CSS3</span><span class="tool-tag">Python</span><span class="tool-tag">SQL</span>
+                    </div>
+                </div>
+                <div class="spec-group">
+                    <h3 class="spec-category">Frameworks & Libraries</h3>
+                    <div class="tool-tags">
+                        <span class="tool-tag">React</span><span class="tool-tag">Node.js</span><span class="tool-tag">Next.js</span><span class="tool-tag">Django</span><span class="tool-tag">Svelte</span>
+                    </div>
+                </div>
+                <div class="spec-group">
+                    <h3 class="spec-category">Design & Prototyping</h3>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Figma</span><span class="tool-tag">Adobe XD</span><span class="tool-tag">Photoshop</span><span class="tool-tag">Prototyping</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="philosophy-section card">
+            <blockquote class="philosophy-quote">
+                <p>"Good design is like a refrigerator—when it works, no one notices, but when it doesn’t, it sure stinks."</p>
+                <cite>— Irene Au</cite>
+            </blockquote>
+        </section>
+        
+        <section class="timeline-section card">
+            <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Academic Blueprint</h2>
+            <div class="timeline">
+                <div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2018 - 2022</span><h4 class="timeline-title">Hajee Mohammad Danesh Science and Technology University</h4><p class="timeline-company">B.Sc in Mechanical Engineering</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2015 - 2017</span><h4 class="timeline-title">Jamuna Sar Karkhana Uchcha Madhyamic Bidhyalaya</h4><p class="timeline-company">Higher Secondary Certificate</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><span class="timeline-date">2010 - 2015</span><h4 class="timeline-title">Boyra Israil Ahmed High School</h4><p class="timeline-company">Secondary School Certificate</p></div></div>
+            </div>
+        </section>
+        
+        <section class="contact-section card">
+            <h2 class="section-title"><i class="fa-solid fa-paper-plane"></i> Get in Touch</h2>
+            <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious vision. Feel free to reach out.</p>
+            <a href="mailto:email@example.com" class="cta-button">Say Hello</a>
+        </section>
+        
+        <footer class="footer"><p>© 2025 Shahidul Islam. All Rights Reserved.</p></footer>
         
     </div>
     

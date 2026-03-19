@@ -1,107 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shahidul Islam | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Lucide-style Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Minimalist Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shahidul Islam | Productive Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-pM8GZfF2cu3wL5XGq1jG7uaxEQ6v6c0mXfTQd0N0WlgUxAi7Bn4bNq9sZ2V0jU4rby2oronU2nIxhj4K6SnwKQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body data-theme="light">
-    
-    <div class="container">
-        <!-- Audio Source -->
-        <audio id="bgm" loop src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Amar_Sonar_Bangla_instrumental_by_US_Navy_Band.oga"></audio>
+  <div class="page-shell">
+    <header class="topbar">
+      <div>
+        <p class="logo">Sibp247</p>
+        <p class="tag">Engineer · Maker · Builder</p>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#projects">Projects</a>
+        <a class="btn btn-ghost" href="#contact">Contact</a>
+      </div>
+    </header>
 
-        <main class="grid">
-            
-            <!-- 1. Profile Hero -->
-            <section class="card profile col-2 row-2">
-                <div class="badge">Available for work</div>
-                <img src="https://i.ibb.co/tPMk2g25/pp5-2.png" alt="Shahidul" class="avatar">
-                <h1>Shahidul Islam</h1>
-                <p class="subtitle">Engineer & Developer</p>
-                <div class="social-links">
-                    <a href="https://github.com/sibp247"><i class="fa-brands fa-github"></i></a>
-                    <a href="https://linkedin.com/in/sibp365"><i class="fa-brands fa-linkedin"></i></a>
-                    <a href="mailto:sibp365@proton.me"><i class="fa-solid fa-envelope"></i></a>
-                </div>
-            </section>
+    <section class="hero glass">
+      <div class="hero-left">
+        <p class="eyebrow">Hello, I’m</p>
+        <h1>Shahidul Islam</h1>
+        <p class="hero-sub">I design scalable products, rapid prototypes, and delightful engineering experiences for startups and global teams.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="mailto:sibp365@proton.me">Hire Me</a>
+          <a class="btn btn-outline" href="#projects">See Work</a>
+        </div>
+        <div class="stats-row">
+          <div><span>8+</span> years experience</div>
+          <div><span>30+</span> shipped products</div>
+          <div><span>1200+</span> commits/month</div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="badge">Available for Freelance</div>
+          <div class="avatar-wrap"><img src="https://i.ibb.co/tPMk2g25/pp5-2.png" alt="Shahidul Islam" /></div>
+          <h3>Shahidul Islam</h3>
+          <p>Software Engineer • Mechanical Systems</p>
+          <div class="socials"><a href="https://github.com/sibp247"><i class="fa-brands fa-github"></i></a><a href="https://linkedin.com/in/sibp365"><i class="fa-brands fa-linkedin"></i></a><a href="mailto:sibp365@proton.me"><i class="fa-solid fa-envelope"></i></a></div>
+        </div>
+      </div>
+    </section>
 
-            <!-- 2. About -->
-            <section class="card about col-2">
-                <p>I blend <span class="text-bold">mechanical precision</span> with <span class="text-bold">modern software engineering</span> to create minimalist digital tools.</p>
-            </section>
+    <section class="section-group" id="about">
+      <div class="glass paper">
+        <div class="section-head"><p class="label">About</p><h2>From AutoCAD to APIs</h2></div>
+        <p>I combine mechanical design instincts with full-stack development to produce clean, efficient, and reliable digital experiences. I ship production-grade apps with strong focus on performance, simplicity, and clear communication.</p>
+      </div>
+      <div class="glass paper">
+        <div class="section-head"><p class="label">Core Skills</p><h2>What I Use Daily</h2></div>
+        <div class="skill-grid"><span>React</span><span>Next.js</span><span>Python</span><span>Node.js</span><span>TypeScript</span><span>Three.js</span><span>Figma</span><span>Illustrator</span></div>
+      </div>
+    </section>
 
-            <!-- 3. Tech -->
-            <section class="card tech col-2">
-                <div class="stack">
-                    <span>React</span><span>Next.js</span><span>Python</span><span>Three.js</span><span>AutoCAD</span>
-                </div>
-            </section>
+    <section class="glass projects" id="projects">
+      <div class="section-head"><p class="label">Featured Projects</p><h2>Modern builds and tools</h2></div>
+      <div class="project-list">
+        <article class="project-card"><div><p class="project-title">AutoCAD 2025 Learning Hub</p><p class="project-desc">Interactive technical tutorials, revision workflows, and quick part generation utilities.</p></div><a href="#" aria-label="Open project">↗</a></article>
+        <article class="project-card"><div><p class="project-title">Nebula Creative CMS</p><p class="project-desc">A content-first dashboard with performance metrics, deployment status, and AI-driven copy drafts.</p></div><a href="#" aria-label="Open project">↗</a></article>
+        <article class="project-card"><div><p class="project-title">Generative Art Studio</p><p class="project-desc">WebGL shader toolkit for realtime generative visualizations inspired by mechanical forms.</p></div><a href="#" aria-label="Open project">↗</a></article>
+      </div>
+    </section>
 
-            <!-- 4. Projects -->
-            <section class="card projects col-2 row-2">
-                <h3 class="label">Featured Work</h3>
-                <div class="project-list">
-                    <a href="#" class="project-item">
-                        <span>AutoCAD 2025 Guide</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
-                    <a href="#" class="project-item">
-                        <span>Nebula Framework</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
-                </div>
-            </section>
+    <section class="small-grid">
+      <article class="glass mini-card"><p class="label">Live Time</p><h3 id="clock">--:--:--</h3><p>Dhaka, Bangladesh</p></article>
+      <article class="glass mini-card" id="theme-btn"><p class="label">Theme</p><div class="toggle"><i class="fa-solid fa-moon" id="theme-icon"></i><span id="theme-text">Dark</span></div></article>
+      <article class="glass mini-card" id="audio-btn"><p class="label">Music</p><div class="toggle"><i class="fa-solid fa-play"></i><span id="audio-status">Play BGM</span></div></article>
+      <article class="glass mini-card"><p class="label">Now Learning</p><h4>WebXR & Generative Interfaces</h4></article>
+    </section>
 
-            <!-- 5. Location & Time -->
-            <section class="card widget">
-                <div class="time" id="clock">00:00:00</div>
-                <div class="location">Dhaka, BD</div>
-            </section>
+    <section class="glass contact" id="contact">
+      <div><p class="label">Let’s Build</p><h2>Got a project? Let’s talk.</h2></div>
+      <div><a class="btn btn-primary" href="mailto:sibp365@proton.me">Email Me</a></div>
+    </section>
+  </div>
 
-            <!-- 6. Theme Toggle -->
-            <section class="card widget clickable" id="theme-btn">
-                <i class="fa-solid fa-moon" id="theme-icon"></i>
-                <span id="theme-text">Dark</span>
-            </section>
-
-            <!-- 7. Audio Player -->
-            <section class="card widget clickable" id="audio-btn">
-                <div class="audio-wave" id="wave">
-                    <span></span><span></span><span></span>
-                </div>
-                <span id="audio-status">Play BGM</span>
-            </section>
-
-            <!-- 8. GitHub Activity -->
-            <section class="card stats">
-                <div class="contrib-label">1,204 Commits</div>
-                <div class="grid-mini" id="stats-grid"></div>
-            </section>
-
-            <!-- 9. Exploring -->
-            <section class="card col-2 exploring">
-                <span class="label">Currently Exploring</span>
-                <h3>WebXR & Generative Art</h3>
-            </section>
-
-            <!-- 10. Education -->
-            <section class="card col-4 education">
-                <div class="edu-row">
-                    <div class="edu-item"><strong>B.Sc ME</strong> <span>HSTU</span></div>
-                    <div class="edu-item"><strong>HSC</strong> <span>JSK College</span></div>
-                    <div class="edu-item"><strong>SSC</strong> <span>BIA High School</span></div>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <script src="script.js"></script>
+  <audio id="bgm" loop src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Amar_Sonar_Bangla_instrumental_by_US_Navy_Band.oga"></audio>
+  <script src="script.js"></script>
 </body>
 </html>
